@@ -172,26 +172,87 @@ export default function App() {
   const featured = DEMO_EVENTS.filter((e) => e.featured);
   const featuredShown = featuredExpanded ? featured : featured.slice(0, 3);
 
+  const hasActiveFilters = Boolean(
+    q.trim() ||
+      tag ||
+      eventType ||
+      cost ||
+      country ||
+      state ||
+      startMonth,
+  );
+
+  function clearFilters() {
+    setQ("");
+    setTag("");
+    setEventType("");
+    setCost("");
+    setCountry("");
+    setState("");
+    setStartMonth("");
+  }
+
+  const activeFilterPills = useMemo(() => {
+    const pills = [];
+    if (q.trim()) pills.push({ key: "q", label: `Search: “${q.trim().slice(0, 24)}${q.trim().length > 24 ? "…" : ""}”` });
+    if (tag) pills.push({ key: "tag", label: `Tag: #${tag}` });
+    if (eventType) pills.push({ key: "type", label: `Type: ${eventType}` });
+    if (cost) pills.push({ key: "cost", label: `Cost: ${cost}` });
+    if (country) pills.push({ key: "country", label: `Country: ${country}` });
+    if (state) pills.push({ key: "state", label: `State: ${state}` });
+    if (startMonth) pills.push({ key: "month", label: `Month: ${startMonth}` });
+    return pills;
+  }, [q, tag, eventType, cost, country, state, startMonth]);
+
   return (
-    <div className="app">
+    <div className="page">
+      <div className="topbar" role="navigation" aria-label="Project links">
+        <span className="topbar__brand">Data Umbrella</span>
+        <div className="topbar__links">
+          <a
+            href="https://github.com/data-umbrella/du-event-board"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Upstream repo
+          </a>
+          <a
+            href="https://data-umbrella.github.io/du-event-board"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Live site
+          </a>
+          <a
+            href="https://github.com/data-umbrella/du-event-board/wiki/Project-Idea"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Project idea
+          </a>
+        </div>
+      </div>
+
+      <div className="app">
       <header className="header">
         <div className="header__brand">
           <span className="header__logo" aria-hidden>
             ◉
           </span>
           <div>
-            <h1>DU event board (mock UI)</h1>
+            <p className="header__eyebrow">GSoC 2026 · Event discovery prototype</p>
+            <h1>Event board</h1>
             <p className="header__sub">
-              Scratch build for my GSoC write-up, roughly following the{" "}
+              UI sketch aligned with the official{" "}
               <a
                 href="https://github.com/data-umbrella/du-event-board/wiki/Project-Idea"
                 target="_blank"
                 rel="noreferrer"
               >
-                DU wiki write-up
+                project idea
               </a>
-              . Fake data in <code>src/data/events.js</code>. Real site is
-              separate.
+              . Demo data lives in <code>src/data/events.js</code>; production is
+              YAML → CI → <code>events.json</code>.
             </p>
           </div>
         </div>
@@ -258,8 +319,31 @@ export default function App() {
             onChange={(ev) => setQ(ev.target.value)}
           />
         </div>
+        <div className="row row--toolbar">
+          {hasActiveFilters ? (
+            <button
+              type="button"
+              className="btn btn--small btn--muted"
+              onClick={clearFilters}
+            >
+              Clear filters
+            </button>
+          ) : null}
+        </div>
+        {activeFilterPills.length > 0 ? (
+          <div className="active-filters" aria-label="Active filters">
+            <span className="active-filters__label">Active</span>
+            <div className="active-filters__pills">
+              {activeFilterPills.map((p) => (
+                <span key={p.key} className="pill pill--soft">
+                  {p.label}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : null}
         <div className="row row--chips">
-          <span className="label">Tags:</span>
+          <span className="label">Tags</span>
           <button
             type="button"
             className={`chip ${!tag ? "chip--on" : ""}`}
@@ -356,7 +440,11 @@ export default function App() {
             </select>
           </label>
         </div>
-        <div className="row row--views" role="group" aria-label="View mode">
+        <div
+          className="segmented"
+          role="group"
+          aria-label="View mode"
+        >
           {[
             ["grid", "Grid"],
             ["list", "List"],
@@ -366,7 +454,7 @@ export default function App() {
             <button
               key={id}
               type="button"
-              className={`btn ${view === id ? "btn--primary" : ""}`}
+              className={`segmented__btn ${view === id ? "segmented__btn--on" : ""}`}
               aria-pressed={view === id}
               onClick={() => setView(id)}
             >
@@ -465,17 +553,18 @@ export default function App() {
 
       <footer className="footer">
         <p>
-          Just a UI mock. Actual work is in{" "}
+          Prototype only. Production code:{" "}
           <a
             href="https://github.com/data-umbrella/du-event-board"
             target="_blank"
             rel="noreferrer"
           >
             data-umbrella/du-event-board
-          </a>{" "}
-          (YAML + generator + tests etc.).
+          </a>
+          .
         </p>
       </footer>
+      </div>
     </div>
   );
 }
