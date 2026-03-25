@@ -4,7 +4,7 @@
 
 I put a small React mock online so the scope is easier to see than from text alone. It is **not** the upstream app; it’s just static fake data and UI.
 
-- Repo: `https://github.com/<you>/<repo>` (push this folder there)
+- Repo: https://github.com/Shivampal157/-du-event-board-gsoc-2026-prototype
 - Video: `<link after upload>`
 
 ### References I actually used
@@ -19,4 +19,4 @@ I put a small React mock online so the scope is easier to see than from text alo
 
 ### Work after the deadline
 
-Proposal PDF is fixed on submit day, but I’ll keep committing on https://github.com/data-umbrella/du-event-board . Optional: a dated list in `https://github.com/<you>/<log-repo>` so nothing gets lost between submit and results.
+Proposal PDF is fixed on submit day, but I’ll keep committing on https://github.com/data-umbrella/du-event-board . Optional: a dated list in https://github.com/Shivampal157/du-event-board-gsoc-2026-log so nothing gets lost between submit and results.

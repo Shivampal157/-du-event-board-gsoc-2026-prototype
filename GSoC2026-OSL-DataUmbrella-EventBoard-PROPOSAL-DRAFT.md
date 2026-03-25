@@ -131,7 +131,7 @@ I am planning to include a **working UI prototype** (real code + real interactio
 This prototype is aligned with the Data Umbrella Event Board roadmap (featured section, hashtag chips, multi-dimensional filters, and grid/list/calendar/map views). It uses a small demo dataset for speed, but the UI logic and component structure are implemented as a real React app (so I can record a smooth and accurate video walkthrough).
 
 ### Prototype (code) + video
-- **Prototype repo (public):** `du-gsoc-proposal-demo` → paste link: **[PASTE_DEMO_REPO_URL]**
+- **Prototype repo (public):** https://github.com/Shivampal157/-du-event-board-gsoc-2026-prototype
 - **UI walkthrough video (public):** **[PASTE_VIDEO_URL]**
 
 In the video, I will show:
